@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	<servlet>
+		<servlet-name>Quotes</servlet-name>
+		<servlet-class>fr.eurecom.quotes.QuotesServlet</servlet-class>
+	</servlet>
+	<!--  HelloMoon Servlet -->
+	<servlet>
+	    <servlet-name>Hellomoongae</servlet-name>
+	    <servlet-class>fr.eurecom.quotes.HellomoongaeServlet</servlet-class>
+	</servlet>
+	<!--  SaveQuote Servlet -->
+	<servlet>
+	    <servlet-name>SaveQuote</servlet-name>
+	    <servlet-class>fr.eurecom.quotes.SaveQuoteServlet</servlet-class>
+	</servlet>
+	<servlet>
+	    <servlet-name>QuotesList</servlet-name>
+	    <servlet-class>fr.eurecom.quotes.QuotesListServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>Quotes</servlet-name>
+		<url-pattern>/quotes</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Hellomoongae</servlet-name>
+		<url-pattern>/hellomoongae</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SaveQuote</servlet-name>
+		<url-pattern>/savequote</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>QuotesList</servlet-name>
+		<url-pattern>/quoteslist</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+</web-app>
