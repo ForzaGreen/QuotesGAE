@@ -60,7 +60,11 @@ public class SaveQuoteServlet extends HttpServlet {
 			String quoteYear = req.getParameter("year");
 			quote.setProperty("year", quoteYear);			
 		}
-		
+		// W: 23-1-2016
+		if(req.getParameter("origin") != null) {
+			String quoteOrigin = req.getParameter("origin");
+			quote.setProperty("origin", quoteOrigin);			
+		}
 		
 		// Save in the Datastore
 		datastore.put(quote);
