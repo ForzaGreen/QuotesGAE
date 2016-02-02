@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
 public class SaveQuoteServlet extends HttpServlet {
@@ -19,6 +21,24 @@ public class SaveQuoteServlet extends HttpServlet {
 				"Save quote servlet. GET method doesn't do anything.");
 	}
 
+	/**
+	 * Delete a quote.
+	 * W: 28-01-2016
+	 */
+	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();		
+		if(req.getParameter("id") != null) {
+			String id = req.getParameter("id");
+			Key k = KeyFactory.createKey("Quote", id);
+			datastore.delete(k);
+//			datastore.delete(KeyFactory.stringToKey(id));
+		} else {
+			resp.getWriter().println(
+					"Please give the id of the quote to be deleted");
+		}
+	}
+	
 	/**
 	 * Save a quote in the DB. The quote can be new or already existent.
 	 */
@@ -33,8 +53,24 @@ public class SaveQuoteServlet extends HttpServlet {
 				.getDatastoreService();
 		// Generate or retrieve the key associated with an existent quote
 		// Create or modify the entity associated with the quote
-		Entity quote;
-		quote = new Entity("Quote");
+		Entity quote = null;
+		
+		// W: 28-1-2016
+		if(req.getParameter("id") != null) {
+			String id = req.getParameter("id");
+			try {
+//				Key k = KeyFactory.createKey("Quote", id);
+//				quote = datastore.get(k);
+				quote = datastore.get(KeyFactory.stringToKey(id));
+			} catch (EntityNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Your key doesn't exist in the datastore");
+			}
+		} else {
+			quote = new Entity("Quote");
+		}
+		
 		
 		if(req.getParameter("language") != null) {
 			String quoteLanguage = req.getParameter("language");
@@ -64,6 +100,11 @@ public class SaveQuoteServlet extends HttpServlet {
 		if(req.getParameter("origin") != null) {
 			String quoteOrigin = req.getParameter("origin");
 			quote.setProperty("origin", quoteOrigin);			
+		}
+		// W: 28-1-2016
+		if(req.getParameter("likes") != null) {
+			String quoteLikes = req.getParameter("likes");
+			quote.setProperty("likes", quoteLikes);			
 		}
 		
 		// Save in the Datastore

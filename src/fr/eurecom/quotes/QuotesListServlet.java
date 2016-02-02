@@ -257,6 +257,7 @@ public class QuotesListServlet extends HttpServlet {
 				quoteJSON.put("textQuote", quote.getProperty("textQuote"));
 				quoteJSON.put("year", quote.getProperty("year"));
 				quoteJSON.put("origin", quote.getProperty("origin")); // W: 23-1-2016
+				quoteJSON.put("likes", quote.getProperty("likes")); // W: 28-1-2016
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
