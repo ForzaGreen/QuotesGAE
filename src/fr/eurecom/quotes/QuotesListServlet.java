@@ -24,6 +24,9 @@ import com.google.appengine.labs.repackaged.org.json.*;
 public class QuotesListServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		
+		resp.setContentType("application/json; charset=UTF-8"); //W: 6-2-2016
+		
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		
 		// Take the list of quotes ordered by author
@@ -38,7 +41,7 @@ public class QuotesListServlet extends HttpServlet {
 		if (responseType != null) {
 			if (responseType.equals("json")) {
 				// Set header to JSON output
-				resp.setContentType("application/json");
+				//resp.setContentType("application/json");
 								
 				String origin = req.getParameter("origin"); //W: 23-1-2016
 				String language = req.getParameter("lang");
